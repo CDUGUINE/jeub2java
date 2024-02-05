@@ -1,6 +1,7 @@
 package vue;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -17,6 +18,10 @@ public class Arena extends JFrame {
 	 * Create the frame.
 	 */
 	public Arena() {
+		setResizable(false);
+		// Dimension de la frame en fonction de son contenu
+		this.getContentPane().setPreferredSize(new Dimension(800, 600 + 25 + 140));
+		this.pack();
 		setTitle("Arena");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 814, 640);
