@@ -1,4 +1,9 @@
-/controleur/
-/modele/
-/outils/
+/boules/
+/fonds/
+/murs/
+/personnages/
+/sons/
+/EntreeJeu$1.class
+/EntreeJeu.class
 /vue/
+/controleur/
