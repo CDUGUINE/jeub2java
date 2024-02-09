@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class ChoixJoeur extends JFrame {
+public class ChoixJoueur extends JFrame {
 
 	private JPanel contentPane;
 
@@ -35,14 +35,14 @@ public class ChoixJoeur extends JFrame {
 	 * clic sur le bouton GO pour lancer le serveur
 	 */
 	private void btnGo_clic() {
-		(new Arena()).setVisible(true);
+		(new Arene()).setVisible(true);
 			this.dispose();
 	}
 	
 	/**
 	 * Create the frame.
 	 */
-	public ChoixJoeur() {
+	public ChoixJoueur() {
 		// Dimension de la frame en fonction de son contenu
 				this.getContentPane().setPreferredSize(new Dimension(400, 275));
 				this.pack();setTitle("Choice");
@@ -74,7 +74,7 @@ public class ChoixJoeur extends JFrame {
 		contentPane.add(lblFDroite);
 		
 		JLabel lblFond = new JLabel("");
-		lblFond.setIcon(new ImageIcon(ChoixJoeur.class.getResource("/fonds/fondchoix.jpg")));
+		lblFond.setIcon(new ImageIcon(ChoixJoueur.class.getResource("/fonds/fondchoix.jpg")));
 		lblFond.setBounds(0, 0, 400, 275);
 		contentPane.add(lblFond);
 		

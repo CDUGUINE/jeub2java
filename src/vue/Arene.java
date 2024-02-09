@@ -10,18 +10,19 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 
-public class Arena extends JFrame {
+public class Arene extends JFrame {
 
 	private JPanel contentPane;
 
 	/**
 	 * Create the frame.
 	 */
-	public Arena() {
-		setResizable(false);
+	public Arene() {
 		// Dimension de la frame en fonction de son contenu
 		this.getContentPane().setPreferredSize(new Dimension(800, 600 + 25 + 140));
 		this.pack();
+		this.setResizable(false);
+		
 		setTitle("Arena");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 814, 640);
@@ -31,7 +32,7 @@ public class Arena extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(Arena.class.getResource("/fonds/fondarene.jpg")));
+		lblNewLabel.setIcon(new ImageIcon(Arene.class.getResource("/fonds/fondarene.jpg")));
 		lblNewLabel.setBounds(0, 0, 800, 600);
 		contentPane.add(lblNewLabel);
 	}
