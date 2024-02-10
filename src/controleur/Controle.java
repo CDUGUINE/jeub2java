@@ -5,6 +5,9 @@ import java.awt.Frame;
 import vue.EntreeJeu;
 import vue.Arene;
 import vue.ChoixJoueur;
+import modele.Jeu;
+import modele.JeuClient;
+import modele.JeuServeur;
 import outils.connexion.AsyncResponse;
 import outils.connexion.ClientSocket;
 import outils.connexion.Connection;
@@ -16,7 +19,7 @@ import outils.connexion.ServeurSocket;
  * @author emds
  *
  */
-public class Controle implements AsyncResponse {
+public class Controle implements AsyncResponse, Global {
 
 	/**
 	 * frame EntreeJeu
@@ -30,11 +33,12 @@ public class Controle implements AsyncResponse {
 	 * frame ChoixJoueur
 	 */
 	private ChoixJoueur frmChoixJoueur;
-	/**
-	 * type du jeu : client ou serveur
-	 */
-	private String typeJeu;
 
+	/**
+	 * déclaration du jeu
+	 */
+	private Jeu leJeu;
+	
 	/**
 	 * Méthode de démarrage
 	 * 
@@ -54,33 +58,52 @@ public class Controle implements AsyncResponse {
 
 	public void evenementEntreeJeu(String info) {
 		if (info.equals("serveur")) {
-			this.typeJeu = "serveur";
-			new ServeurSocket(this, 6666);
+			new ServeurSocket(this, PORT);
+			this.leJeu = new JeuServeur(this);
 			this.frmEntreeJeu.dispose();
 			this.frmArene = new Arene();
 			this.frmArene.setVisible(true);
 		} else {
-			this.typeJeu = "client";
-			new ClientSocket(this, info, 6666);
-
+			new ClientSocket(this, info, PORT);
 		}
+	}
+	
+	public void evenementChoixJoueur(String pseudo, int numPerso) {
+		this.frmChoixJoueur.dispose();
+		this.frmArene.setVisible(true);
+		((JeuClient)leJeu).envoi(PSEUDO+STRINGSEPARE+pseudo+STRINGSEPARE+numPerso );
+		}
+	
+	/**
+	 * Envoi d'information vers l'ordinateur distant
+	 * @param connection objet de connection pour l'envoi vers l'rdianteur distant
+	 * @param info information à envoyer
+	 */
+	public void envoi(Connection connection, Object info) {
+		connection.envoi(info);
 	}
 
 	@Override
 	public void reception(Connection connection, String ordre, Object info) {
 		// TODO Auto-generated method stub
 		switch (ordre) {
-		case "connexion":
-			if (this.typeJeu.equals("client")) {
+		case CONNEXION :
+			if (!(this.leJeu instanceof JeuServeur)) {
+				this.leJeu = new JeuClient(this);
+				this.leJeu.connexion(connection);
 				this.frmEntreeJeu.dispose();
 				this.frmArene = new Arene();
-				this.frmChoixJoueur = new ChoixJoueur();
+				this.frmChoixJoueur = new ChoixJoueur(this);
 				this.frmChoixJoueur.setVisible(true);
 			}
+			else {
+				this.leJeu.connexion(connection);
+			}
 			break;
-		case "réception":
+		case RECEPTION :
+			this.leJeu.reception(connection, info);
 			break;
-		case "déconnexion":
+		case DECONNEXION :
 			break;
 		}
 	}
