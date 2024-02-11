@@ -107,5 +107,33 @@ public interface Global {
 	 * perte de points de vie lors d'une attaque
 	 */
 	int PERTE = 2 ; 
+	/**
+	 * largeur d'un mur
+	 */
+	int LARGEURMUR = 34;
+	/**
+	 * hauteur d'un mur
+	 */
+	int HAUTEURMUR = 35;
+	/**
+	 * largeur de l'arène
+	 */
+	int LARGEURARENE = 800;
+	/**
+	 * hauteur de l'arène
+	 */
+	int HAUTEURARENE = 600;
+	/**
+	 * nombre de murs
+	 */
+	int NBMURS = 20;
+	/**
+	 * Message "ajout mur" envoyé pour la création d'un mur
+	 */
+	String AJOUTMUR = "ajout mur";
+	/**
+	 * Message "ajout panel de murs" envoyé pour la création des murs
+	 */
+	String AJOUTPANELMURS = "ajout panel murs";
 
 }

@@ -2,6 +2,8 @@ package controleur;
 
 import java.awt.Frame;
 
+import javax.swing.JPanel;
+
 import vue.EntreeJeu;
 import vue.Arene;
 import vue.ChoixJoueur;
@@ -62,6 +64,7 @@ public class Controle implements AsyncResponse, Global {
 			this.leJeu = new JeuServeur(this);
 			this.frmEntreeJeu.dispose();
 			this.frmArene = new Arene();
+			((JeuServeur)leJeu).constructionMurs();
 			this.frmArene.setVisible(true);
 		} else {
 			new ClientSocket(this, info, PORT);
@@ -73,6 +76,33 @@ public class Controle implements AsyncResponse, Global {
 		this.frmArene.setVisible(true);
 		((JeuClient)leJeu).envoi(PSEUDO+STRINGSEPARE+pseudo+STRINGSEPARE+numPerso );
 		}
+	
+	/**
+	 * Demande provenant de JeuServeur
+	 * @param ordre ordre à exécuter
+	 * @param info information à traiter
+	 */
+	public void evenementJeuServeur(String ordre, Object info) {
+		switch(ordre) {
+		case AJOUTMUR :
+			frmArene.ajoutMurs(info);
+			break;
+		case AJOUTPANELMURS :
+			this.leJeu.envoi((Connection)info, this.frmArene.getJpnMurs());
+			break;
+		}
+	}
+	
+	/**
+	 * Demande provenant de JeuClient
+	 * @param ordre ordre à exécuter
+	 * @param info information à traiter
+	 */
+	public void evenementJeuClient(String ordre, Object info) {
+		if(ordre.equals(AJOUTPANELMURS)) {
+			this.frmArene.setJpnMurs((JPanel)info);
+		}
+	}
 	
 	/**
 	 * Envoi d'information vers l'ordinateur distant
