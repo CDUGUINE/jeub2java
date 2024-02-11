@@ -22,6 +22,12 @@ public abstract class Objet {
 	 */
 	protected JLabel jLabel;
 	
+	/**
+	 * @return the jLabel
+	 */
+	public JLabel getjLabel() {
+		return jLabel;
+	}	
 	
 	/**
 	 * contrôle si l'objet actuel touche l'objet passé en paramètre
@@ -30,13 +36,6 @@ public abstract class Objet {
 	 */
 	public Boolean toucheObjet (Objet objet) {
 		return null;
-	}
-
-	/**
-	 * @return the jLabel
-	 */
-	public JLabel getjLabel() {
-		return jLabel;
 	}
 	
 }

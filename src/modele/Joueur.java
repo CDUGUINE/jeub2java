@@ -28,6 +28,14 @@ public class Joueur extends Objet implements Global {
 	 * la boule du joueur
 	 */
 	private Boule boule ;
+	/**
+	 * vie restante du joueur
+	 */
+	private int vie ; 
+	/**
+	 * tourné vers la gauche (0) ou vers la droite (1)
+	 */
+	private int orientation ;
 	
 	/**
 	 * Constructeur
@@ -37,8 +45,13 @@ public class Joueur extends Objet implements Global {
 
 	/**
 	 * Initialisation d'un joueur (pseudo et numéro, calcul de la 1ère position, affichage, création de la boule)
+	 * @param numPerso numéro du personnage
+	 * @param pseudo pseudo du joueur
 	 */
-	public void initPerso(String info, int numJoueur) {
+	public void initPerso(String pseudo, int numPerso) {
+		this.pseudo = pseudo;
+		this.numPerso = numPerso;
+		System.out.println("joueur "+pseudo+" - num perso "+numPerso+" créé");
 	}
 
 	/**
@@ -66,11 +79,6 @@ public class Joueur extends Objet implements Global {
 	}
 
 	/**
-	 * tourné vers la gauche (0) ou vers la droite (1)
-	 */
-	private int orientation;
-	
-	/**
 	 * Contrôle si le joueur touche un des autres joueurs
 	 * @return true si deux joueurs se touchent
 	 */
@@ -97,12 +105,7 @@ public class Joueur extends Objet implements Global {
 	 */
 	public void perteVie() {
 	}
-	
-	/**
-	 * vie restante
-	 */
-	private int vie;
-	
+		
 	/**
 	 * vrai si la vie est à 0
 	 * @return true si vie = 0

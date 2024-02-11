@@ -1,4 +1,5 @@
 package modele;
+
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -40,11 +41,11 @@ public class JeuServeur extends Jeu implements Global {
 		String ordre = infos[0];
 		switch(ordre) {
 		case PSEUDO :
+			// arrivée des informations d'un nouveau joueur
 			controle.evenementJeuServeur(AJOUTPANELMURS, connection);
 			String pseudo = infos[1];
 			int numPerso = Integer.parseInt(infos[2]);
 			this.lesJoueurs.get(connection).initPerso(pseudo, numPerso);
-			System.out.println("joueur "+pseudo+" - num perso "+numPerso+" créé");
 			break;
 		}
 	}

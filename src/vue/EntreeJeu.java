@@ -1,23 +1,30 @@
 package vue;
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.SwingConstants;
+
 import controleur.Controle;
 
+/**
+ * Frame de l'entrée dans le jeu (choix entre serveur et client)
+ * @author cdug
+ *
+ */
 public class EntreeJeu extends JFrame {
 
+	/**
+	 * Panel général
+	 */
 	private JPanel contentPane;
+	/**
+	 * Zone de saisie de l'IP
+	 */
 	private JTextField txtIP;
-
 	/**
 	 * Instance du contrôleur pour communiquer avec lui
 	 */
@@ -46,6 +53,7 @@ public class EntreeJeu extends JFrame {
 	
 	/**
 	 * Create the frame.
+	 * @param controle instance du contrôleur
 	 */
 	public EntreeJeu(Controle controle) {
 		setResizable(false);
@@ -53,52 +61,51 @@ public class EntreeJeu extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 300, 147);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Start a server :");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel.setBounds(10, 10, 90, 13);
-		contentPane.add(lblNewLabel);
+		JLabel lblStartAServer = new JLabel("Start a server :");
+		lblStartAServer.setBounds(10, 11, 94, 14);
+		contentPane.add(lblStartAServer);
 		
-		JLabel lblNewLabel_1 = new JLabel("Connect an existing server :");
-		lblNewLabel_1.setBounds(10, 33, 160, 13);
-		contentPane.add(lblNewLabel_1);
+		JButton btnStart = new JButton("Start");
+		btnStart.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				btnStart_clic();
+			}
+		});
+		btnStart.setBounds(184, 6, 85, 21);
+		contentPane.add(btnStart);
 		
-		JLabel lblNewLabel_2 = new JLabel("IP server :");
-		lblNewLabel_2.setBounds(10, 56, 70, 13);
-		contentPane.add(lblNewLabel_2);
+		JLabel lblConnectAnExistingServer = new JLabel("Connect an existing server :");
+		lblConnectAnExistingServer.setBounds(10, 33, 160, 13);
+		contentPane.add(lblConnectAnExistingServer);
+		
+		JLabel lblIpServer = new JLabel("IP server :");
+		lblIpServer.setBounds(10, 56, 70, 13);
+		contentPane.add(lblIpServer);
+		
+		JButton btnConnect = new JButton("Connect");
+		btnConnect.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnConnect_clic() ;
+			}
+		});
+		btnConnect.setBounds(184, 52, 85, 21);
+		contentPane.add(btnConnect);
 		
 		txtIP = new JTextField();
 		txtIP.setText("127.0.0.1");
 		txtIP.setBounds(75, 52, 80, 19);
 		contentPane.add(txtIP);
 		txtIP.setColumns(10);
-		
-		JButton btnStart = new JButton("Start");
-		btnStart.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				btnStart_clic();
-			}
-		});
-		
-		btnStart.setBounds(184, 6, 85, 21);
-		contentPane.add(btnStart);
-		
-		JButton btnConnect = new JButton("Connect");
-		btnConnect.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				btnConnect_clic();
-			}
-		});
-		btnConnect.setBounds(184, 52, 85, 21);
-		contentPane.add(btnConnect);
-		
+				
 		JButton btnExit = new JButton("Exit");
-		btnExit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnExit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
 				btnExit_clic();
 			}
 		});
@@ -108,4 +115,5 @@ public class EntreeJeu extends JFrame {
 		// récupération de l'instance de Controle
 		this.controle = controle;
 	}
+	
 }

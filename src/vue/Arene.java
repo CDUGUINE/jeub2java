@@ -1,29 +1,42 @@
 package vue;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.net.URL;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import controleur.Global;
 
+/**
+ * frame de l'arène du jeu
+ * @author cdug
+ *
+ */
 public class Arene extends JFrame implements Global {
 
 	/**
-	 * déclaration du panel pour le fond
+	 * Panel général
 	 */
 	private JPanel contentPane;
 	/** 
-	 * déclaration du panel pour un mur
+	 * Panel contenant les murs
 	 */
 	private JPanel jpnMurs;
-
+	/**
+	 * Zone de saisie du t'chat
+	 */
+	private JTextField txtSaisie;
+	/**
+	 * Zone d'affichage du t'chat
+	 */
+	private JTextArea txtChat ;
+	
 	/**
 	 * @return the jpnMurs
 	 */
@@ -70,10 +83,25 @@ public class Arene extends JFrame implements Global {
 		jpnMurs.setLayout(null);		
 		contentPane.add(jpnMurs);
 		
+		txtSaisie = new JTextField();
+		txtSaisie.setBounds(0, 600, 800, 25);
+		contentPane.add(txtSaisie);
+		txtSaisie.setColumns(10);
+		
+		JScrollPane jspChat = new JScrollPane();
+		jspChat.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		jspChat.setBounds(0, 625, 800, 140);
+		contentPane.add(jspChat);
+		
+		txtChat = new JTextArea();
+		jspChat.setViewportView(txtChat);
+		
 		JLabel lblFond = new JLabel("");
 		URL resource = getClass().getClassLoader().getResource(FONDARENE);
 		lblFond.setIcon(new ImageIcon(resource));
 		lblFond.setBounds(0, 0, 800, 600);
 		contentPane.add(lblFond);
+		
 	}
+	
 }

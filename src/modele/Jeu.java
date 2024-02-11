@@ -16,11 +16,14 @@ public abstract class Jeu {
 	
 	/**
 	 * Réception d'une connexion (pour communiquer avec un ordinateur distant)
+	 * @param connection objet connection pour la communication
 	 */
 	public abstract void connexion(Connection connection) ;
 	
 	/**
 	 * Réception d'une information provenant de l'ordinateur distant
+	 * @param connection objet de connexion d'où provient l'information
+	 * @param info information reçue
 	 */
 	public abstract void reception(Connection connection, Object info);
 	
@@ -31,6 +34,8 @@ public abstract class Jeu {
 	
 	/**
 	 * Envoi d'une information vers un ordinateur distant
+	 * @param connection objet de connexion pour accéder à l'ordinateur distant
+	 * @param info information à envoyer
 	 */
 	public void envoi(Connection connection, Object info) {
 		this.controle.envoi(connection, info);

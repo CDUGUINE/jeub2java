@@ -1,7 +1,5 @@
 package controleur;
 
-import java.awt.Frame;
-
 import javax.swing.JPanel;
 
 import vue.EntreeJeu;
@@ -17,7 +15,6 @@ import outils.connexion.ServeurSocket;
 
 /**
  * Contrôleur et point d'entrée de l'applicaton
- * 
  * @author emds
  *
  */
@@ -35,15 +32,13 @@ public class Controle implements AsyncResponse, Global {
 	 * frame ChoixJoueur
 	 */
 	private ChoixJoueur frmChoixJoueur;
-
 	/**
-	 * déclaration du jeu
+	 * instance du jeu (JeuServeur ou JeuClient)
 	 */
 	private Jeu leJeu;
 	
 	/**
 	 * Méthode de démarrage
-	 * 
 	 * @param args non utilisé
 	 */
 	public static void main(String[] args) {
@@ -57,7 +52,11 @@ public class Controle implements AsyncResponse, Global {
 		this.frmEntreeJeu = new EntreeJeu(this);
 		this.frmEntreeJeu.setVisible(true);
 	}
-
+	
+	/**
+	 * Demande provenant de la vue EntreeJeu
+	 * @param info information à traiter
+	 */
 	public void evenementEntreeJeu(String info) {
 		if (info.equals("serveur")) {
 			new ServeurSocket(this, PORT);
@@ -71,6 +70,11 @@ public class Controle implements AsyncResponse, Global {
 		}
 	}
 	
+	/**
+	 * Informations provenant de la vue ChoixJoueur
+	 * @param pseudo le pseudo du joueur
+	 * @param numPerso le numéro du personnage choisi par le joueur
+	 */
 	public void evenementChoixJoueur(String pseudo, int numPerso) {
 		this.frmChoixJoueur.dispose();
 		this.frmArene.setVisible(true);
@@ -89,7 +93,6 @@ public class Controle implements AsyncResponse, Global {
 			break;
 		case AJOUTPANELMURS :
 			this.leJeu.envoi((Connection)info, this.frmArene.getJpnMurs());
-			break;
 		}
 	}
 	
@@ -99,8 +102,10 @@ public class Controle implements AsyncResponse, Global {
 	 * @param info information à traiter
 	 */
 	public void evenementJeuClient(String ordre, Object info) {
-		if(ordre.equals(AJOUTPANELMURS)) {
+		switch(ordre) {
+		case AJOUTPANELMURS :
 			this.frmArene.setJpnMurs((JPanel)info);
+			break;
 		}
 	}
 	
@@ -115,7 +120,6 @@ public class Controle implements AsyncResponse, Global {
 
 	@Override
 	public void reception(Connection connection, String ordre, Object info) {
-		// TODO Auto-generated method stub
 		switch (ordre) {
 		case CONNEXION :
 			if (!(this.leJeu instanceof JeuServeur)) {
@@ -125,8 +129,7 @@ public class Controle implements AsyncResponse, Global {
 				this.frmArene = new Arene();
 				this.frmChoixJoueur = new ChoixJoueur(this);
 				this.frmChoixJoueur.setVisible(true);
-			}
-			else {
+			}else {
 				this.leJeu.connexion(connection);
 			}
 			break;
@@ -136,5 +139,7 @@ public class Controle implements AsyncResponse, Global {
 		case DECONNEXION :
 			break;
 		}
+		
 	}
+	
 }
