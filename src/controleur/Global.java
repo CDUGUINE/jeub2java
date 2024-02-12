@@ -116,6 +116,18 @@ public interface Global {
 	 */
 	int HAUTEURMUR = 35;
 	/**
+	 * largeur d'un joueur
+	 */
+	int LARGEURPERSO = 34;
+	/**
+	 * hauteur d'un joueur
+	 */
+	int HAUTEURPERSO = 44;
+	/**
+	 * hauteur des messages joueur
+	 */
+	int HAUTEURMESSAGE = 8;
+	/**
 	 * largeur de l'arène
 	 */
 	int LARGEURARENE = 800;
@@ -128,6 +140,14 @@ public interface Global {
 	 */
 	int NBMURS = 20;
 	/**
+	 * orientation persos gauche
+	 */
+	int GAUCHE = 0;
+	/**
+	 * orientation persos droite
+	 */
+	int DROITE = 1;
+	/**
 	 * Message "ajout mur" envoyé pour la création d'un mur
 	 */
 	String AJOUTMUR = "ajout mur";
@@ -135,5 +155,12 @@ public interface Global {
 	 * Message "ajout panel de murs" envoyé pour la création des murs
 	 */
 	String AJOUTPANELMURS = "ajout panel murs";
-
+	/**
+	 * Message "ajout jlabel jeu" envoyé pour la création d'un joueur
+	 */
+	String AJOUTJLABELJEU = "ajout jlabel jeu";
+	/**
+	 * Message "modification panel du jeu" envoyé pour l'affichage des joueurs
+	 */
+	String MODIFPANELJEU = "ajout jpanel jeu";
 }

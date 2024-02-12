@@ -103,10 +103,10 @@ import java.awt.Dimension;
 	 */
 	public ChoixJoueur(Controle controle) {
 		// Dimension de la frame en fonction de son contenu
-				this.getContentPane().setPreferredSize(new Dimension(400, 275));
-				this.pack();
-				// interdiction de changer la taille
-				this.setResizable(false);
+		this.getContentPane().setPreferredSize(new Dimension(400, 275));
+		this.pack();
+		// interdiction de changer la taille
+		this.setResizable(false);
 				
 		setTitle("Choice");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
