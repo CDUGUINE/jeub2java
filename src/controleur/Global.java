@@ -148,6 +148,14 @@ public interface Global {
 	 */
 	int DROITE = 1;
 	/**
+	 * valeur d'un pas en pixels
+	 */
+	int PAS = 10;
+	/**
+	 * nombre d'étapes de la marche
+	 */
+	int NBETAPESMARCHE = 4;
+	/**
 	 * ordre "ajout phrase" envoyé pour l'ajout d'une phrase au tchat
 	 */
 	String AJOUTPHRASE = "ajout phrase";
@@ -183,4 +191,8 @@ public interface Global {
 	 * ordre envoyé au controleur à vérifier
 	 */ 
 	String TCHAT = "tchat";
+	/**
+	 * ordre envoyé au controleur à vérifier
+	 */ 
+	String ACTION = "action";
 }
