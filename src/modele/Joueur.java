@@ -60,7 +60,14 @@ public class Joueur extends Objet implements Global {
 		this.etape = 1;
 		this.orientation = DROITE;
 	}
-
+	
+	/**
+	 * @return the pseudo
+	 */
+	public String getPseudo() {
+		return pseudo;
+	}
+	
 	/**
 	 * Initialisation d'un joueur (pseudo et numéro, calcul de la 1ère position, affichage, création de la boule)
 	 * @param pseudo pseudo du joueur
@@ -82,8 +89,8 @@ public class Joueur extends Objet implements Global {
 		// calcul de la première position du personnage
 		this.premierePosition(lesJoueurs, lesMurs);
 		// demande d'ajout du label du personnage et du message dans l'arène du serveur
-		this.jeuServeur.ajoutLabelJeuArene(jLabel);
-		this.jeuServeur.ajoutLabelJeuArene(message);
+		this.jeuServeur.ajoutJLabelJeuArene(jLabel);
+		this.jeuServeur.ajoutJLabelJeuArene(message);
 		// demande d'affichage du personnage
 		this.affiche(MARCHE, this.etape);
 	}
@@ -112,7 +119,7 @@ public class Joueur extends Objet implements Global {
 		String chemin = CHEMINPERSONNAGES+PERSO+this.numPerso+MARCHE+etape+"d"+this.orientation+EXTFICHIERPERSO;
 		URL resource = getClass().getClassLoader().getResource(chemin);
 		super.jLabel.setIcon(new ImageIcon(resource));
-		// positionnement et remplissage du message sous le perosnnage
+		// positionnement et remplissage du message sous le personnage
 		this.message.setBounds(posX-10, posY+HAUTEURPERSO, LARGEURPERSO+10, HAUTEURMESSAGE);
 		this.message.setText(pseudo+" : "+vie);
 		// demande d'envoi à tous des modifications d'affichage

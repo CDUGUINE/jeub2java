@@ -16,10 +16,8 @@ public class JeuClient extends Jeu implements Global {
 	 * objet de connexion pour communiquer avec le serveur
 	 */
 	private Connection connection;
-	/**
-	 * création d'un boolean pour différencier les panels reçus
-	 */
-	boolean mursOk = false;
+	private boolean mursOk = false;
+	
 	/**
 	 * Controleur
 	 * @param controle instance du controleur pour les échanges
@@ -44,6 +42,8 @@ public class JeuClient extends Jeu implements Global {
 				// modification du panel de jeu
 				this.controle.evenementJeuClient(MODIFPANELJEU, info);
 			}
+		} else if(info instanceof String) {
+			this.controle.evenementJeuClient(MODIFTCHAT, info);
 		}
 	}
 	

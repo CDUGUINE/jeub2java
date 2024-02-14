@@ -59,12 +59,12 @@ public class Controle implements AsyncResponse, Global {
 	 * @param info information à traiter
 	 */
 	public void evenementEntreeJeu(String info) {
-		if (info.equals("serveur")) {
+		if (info.equals(SERVEUR)) {
 			new ServeurSocket(this, PORT);
 			this.leJeu = new JeuServeur(this);
 			this.frmEntreeJeu.dispose();
-			this.frmArene = new Arene();
-			((JeuServeur)leJeu).constructionMurs();
+			this.frmArene = new Arene(this,SERVEUR);
+			((JeuServeur)this.leJeu).constructionMurs();
 			this.frmArene.setVisible(true);
 		} else {
 			new ClientSocket(this, info, PORT);
@@ -79,8 +79,16 @@ public class Controle implements AsyncResponse, Global {
 	public void evenementChoixJoueur(String pseudo, int numPerso) {
 		this.frmChoixJoueur.dispose();
 		this.frmArene.setVisible(true);
-		((JeuClient)leJeu).envoi(PSEUDO+STRINGSEPARE+pseudo+STRINGSEPARE+numPerso );
-		}
+		((JeuClient)this.leJeu).envoi(PSEUDO+STRINGSEPARE+pseudo+STRINGSEPARE+numPerso );
+	}
+	
+	/**
+	 * Information provenant de la vue Arene
+	 * @param info information
+	 */
+	public void evenementArene(String info) {
+		((JeuClient)this.leJeu).envoi(TCHAT+STRINGSEPARE+info);
+	}
 	
 	/**
 	 * Demande provenant de JeuServeur
@@ -101,6 +109,10 @@ public class Controle implements AsyncResponse, Global {
 		case MODIFPANELJEU :
 			this.leJeu.envoi((Connection)info, this.frmArene.getJpnJeu());
 			break;
+		case AJOUTPHRASE :
+			this.frmArene.ajoutTchat((String)info);
+			((JeuServeur)this.leJeu).envoi(this.frmArene.getTxtChat());
+			break;
 		}
 	}
 	
@@ -117,6 +129,9 @@ public class Controle implements AsyncResponse, Global {
 		case MODIFPANELJEU :
 			this.frmArene.setJpnJeu((JPanel)info);
 			break;
+		case MODIFTCHAT :
+			this.frmArene.setTxtChat((String)info);
+			break;
 		}
 	}
 	
@@ -131,16 +146,16 @@ public class Controle implements AsyncResponse, Global {
 
 	@Override
 	public void reception(Connection connection, String ordre, Object info) {
-		switch (ordre) {
+		switch(ordre) {
 		case CONNEXION :
-			if (!(this.leJeu instanceof JeuServeur)) {
+			if(!(this.leJeu instanceof JeuServeur)) {
 				this.leJeu = new JeuClient(this);
 				this.leJeu.connexion(connection);
 				this.frmEntreeJeu.dispose();
-				this.frmArene = new Arene();
+				this.frmArene = new Arene(this,CLIENT);
 				this.frmChoixJoueur = new ChoixJoueur(this);
 				this.frmChoixJoueur.setVisible(true);
-			}else {
+			} else {
 				this.leJeu.connexion(connection);
 			}
 			break;

@@ -148,6 +148,10 @@ public interface Global {
 	 */
 	int DROITE = 1;
 	/**
+	 * ordre "ajout phrase" envoyé pour l'ajout d'une phrase au tchat
+	 */
+	String AJOUTPHRASE = "ajout phrase";
+	/**
 	 * Message "ajout mur" envoyé pour la création d'un mur
 	 */
 	String AJOUTMUR = "ajout mur";
@@ -163,4 +167,20 @@ public interface Global {
 	 * Message "modification panel du jeu" envoyé pour l'affichage des joueurs
 	 */
 	String MODIFPANELJEU = "ajout jpanel jeu";
+	/**
+	 * Message "modification modif tchat" envoyé pour l'affichage d'un nouveau message du tchat
+	 */
+	String MODIFTCHAT = "modif tchat";
+	/**
+	 * ordre envoyé au controleur à vérifier
+	 */ 
+	String SERVEUR = "serveur";
+	/**
+	 * ordre envoyé au controleur à vérifier
+	 */ 
+	String CLIENT = "client";
+	/**
+	 * ordre envoyé au controleur à vérifier
+	 */ 
+	String TCHAT = "tchat";
 }

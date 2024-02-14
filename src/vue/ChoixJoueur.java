@@ -65,8 +65,8 @@ import java.awt.Dimension;
 	/**
 	 * Clic sur GO pour envoyer les informations
 	 */
-	private void btnGo_clic() {
-		if(txtPseudo.getText().equals("")) {
+	private void lblGo_clic() {
+		if(this.txtPseudo.getText().equals("")) {
 			JOptionPane.showMessageDialog(null, "La saisie d'un pseudo est obligatoire");
 			this.txtPseudo.requestFocus();
 		} else {
@@ -122,7 +122,7 @@ import java.awt.Dimension;
 		JLabel lblPrecedent = new JLabel("");
 		lblPrecedent.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent arg0) {
 				lblPrecedent_clic();
 			}
 			@Override
@@ -155,7 +155,7 @@ import java.awt.Dimension;
 		lblGo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				btnGo_clic();
+				lblGo_clic();
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -180,9 +180,9 @@ import java.awt.Dimension;
 		contentPane.add(lblPrecedent);			
 				
 		JLabel lblFond = new JLabel("");
+		lblFond.setBounds(0, 0, 400, 275);
 		URL resource = getClass().getClassLoader().getResource(FONDCHOIX);
 		lblFond.setIcon(new ImageIcon(resource));
-		lblFond.setBounds(0, 0, 400, 275);
 		contentPane.add(lblFond);
 		
 		// récupération de l'instance de Controle

@@ -24,7 +24,7 @@ public class EntreeJeu extends JFrame {
 	/**
 	 * Zone de saisie de l'IP
 	 */
-	private JTextField txtIP;
+	private JTextField txtIp;
 	/**
 	 * Instance du contrôleur pour communiquer avec lui
 	 */
@@ -41,7 +41,7 @@ public class EntreeJeu extends JFrame {
 	 * clic sur le bouton connect pour choisir un joueur
 	 */
 	private void btnConnect_clic() {
-		this.controle.evenementEntreeJeu(this.txtIP.getText());
+		this.controle.evenementEntreeJeu(this.txtIp.getText());
 	}
 	
 	/** 
@@ -78,9 +78,9 @@ public class EntreeJeu extends JFrame {
 		btnStart.setBounds(184, 6, 85, 21);
 		contentPane.add(btnStart);
 		
-		JLabel lblConnectAnExistingServer = new JLabel("Connect an existing server :");
-		lblConnectAnExistingServer.setBounds(10, 33, 160, 13);
-		contentPane.add(lblConnectAnExistingServer);
+		JLabel lblConnectAnExisting = new JLabel("Connect an existing server :");
+		lblConnectAnExisting.setBounds(10, 33, 160, 13);
+		contentPane.add(lblConnectAnExisting);
 		
 		JLabel lblIpServer = new JLabel("IP server :");
 		lblIpServer.setBounds(10, 56, 70, 13);
@@ -96,11 +96,11 @@ public class EntreeJeu extends JFrame {
 		btnConnect.setBounds(184, 52, 85, 21);
 		contentPane.add(btnConnect);
 		
-		txtIP = new JTextField();
-		txtIP.setText("127.0.0.1");
-		txtIP.setBounds(75, 52, 80, 19);
-		contentPane.add(txtIP);
-		txtIP.setColumns(10);
+		txtIp = new JTextField();
+		txtIp.setText("127.0.0.1");
+		txtIp.setBounds(75, 52, 80, 19);
+		contentPane.add(txtIp);
+		txtIp.setColumns(10);
 				
 		JButton btnExit = new JButton("Exit");
 		btnExit.addMouseListener(new MouseAdapter() {
