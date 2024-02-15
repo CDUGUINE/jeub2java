@@ -128,6 +128,14 @@ public interface Global {
 	 */
 	int HAUTEURMESSAGE = 8;
 	/**
+	 * largeur de la boule
+	 */
+	int LARGEURBOULE = 17;
+	/**
+	 * hauteur de la boule
+	 */
+	int HAUTEURBOULE = 17;
+	/**
 	 * largeur de l'arène
 	 */
 	int LARGEURARENE = 800;

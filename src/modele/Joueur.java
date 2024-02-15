@@ -1,5 +1,4 @@
 package modele;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
@@ -27,13 +26,13 @@ public class Joueur extends Objet implements Global {
 	 */
 	private int numPerso ; 
 	/**
-	 * instance de JeuServeur pour communiquer avec lui
-	 */
-	private JeuServeur jeuServeur ;
-	/**
 	 * message qui s'affiche sous le personnage (contenant pseudo et vie)
 	 */
 	private JLabel message;
+	/**
+	 * instance de JeuServeur pour communiquer avec lui
+	 */
+	private JeuServeur jeuServeur ;
 	/**
 	 * numéro d'étape dans l'animation (de la marche, touché ou mort)
 	 */
@@ -70,13 +69,20 @@ public class Joueur extends Objet implements Global {
 	}
 	
 	/**
+	 * @return the orientation
+	 */	
+	public int getOrientation() {
+		return orientation;
+	}
+	
+	/**
 	 * Initialisation d'un joueur (pseudo et numéro, calcul de la 1ère position, affichage, création de la boule)
 	 * @param pseudo pseudo du joueur
 	 * @param numPerso numéro du personnage
 	 * @param lesJoueurs collection contenant tous les joueurs
 	 * @param lesMurs collection contenant les murs
 	 */
-	public void initPerso(String pseudo, int numPerso, Collection<Joueur> lesJoueurs, ArrayList<Mur> lesMurs) {
+	public void initPerso(String pseudo, int numPerso, Collection lesJoueurs, Collection lesMurs) {
 		this.pseudo = pseudo;
 		this.numPerso = numPerso;
 		System.out.println("joueur "+pseudo+" - num perso "+numPerso+" créé");
@@ -87,11 +93,14 @@ public class Joueur extends Objet implements Global {
 		message.setHorizontalAlignment(SwingConstants.CENTER);
 		message.setFont(new Font("Dialog",Font.BOLD, 8));
 		message.setForeground(Color.WHITE);
+		// création de la boule
+		this.boule = new Boule(this.jeuServeur);
 		// calcul de la première position du personnage
 		this.premierePosition(lesJoueurs, lesMurs);
 		// demande d'ajout du label du personnage et du message dans l'arène du serveur
 		this.jeuServeur.ajoutJLabelJeuArene(jLabel);
 		this.jeuServeur.ajoutJLabelJeuArene(message);
+		this.jeuServeur.ajoutJLabelJeuArene(boule.getjLabel());
 		// demande d'affichage du personnage
 		this.affiche(MARCHE, this.etape);
 	}
@@ -101,12 +110,12 @@ public class Joueur extends Objet implements Global {
 	 * @param lesJoueurs collection contenant tous les joueurs
 	 * @param lesMurs collection contenant les murs
 	 */
-	private void premierePosition(Collection<Joueur> lesJoueurs, ArrayList<Mur> lesMurs) {
+	private void premierePosition(Collection lesJoueurs, Collection lesMurs) {
 		jLabel.setBounds(0, 0, LARGEURPERSO, HAUTEURPERSO);
 		do {
 			posX = (int) Math.round(Math.random() * (LARGEURARENE - LARGEURPERSO)) ;
 			posY = (int) Math.round(Math.random() * (HAUTEURARENE - HAUTEURPERSO - HAUTEURMESSAGE)) ;
-		}while(this.toucheMur(lesMurs) || this.toucheJoueur(lesJoueurs)); 
+		}while(toucheCollectionObjets(lesMurs)!=null || toucheCollectionObjets(lesJoueurs)!=null); 
 	}
 	
 	/**
@@ -116,12 +125,12 @@ public class Joueur extends Objet implements Global {
 	 */
 	public void affiche(String etat, int etape) {
 		// positionnement du personnage et affectation de la bonne image
-		super.jLabel.setBounds(posX, posY, LARGEURPERSO, HAUTEURPERSO);
-		String chemin = CHEMINPERSONNAGES+PERSO+this.numPerso+MARCHE+etape+"d"+this.orientation+EXTFICHIERPERSO;
+		super.jLabel.setBounds(getPosX(), getPosY(), LARGEURPERSO, HAUTEURPERSO);
+		String chemin = CHEMINPERSONNAGES+PERSO+this.numPerso+etat+etape+"d"+this.getOrientation()+EXTFICHIERPERSO;
 		URL resource = getClass().getClassLoader().getResource(chemin);
 		super.jLabel.setIcon(new ImageIcon(resource));
 		// positionnement et remplissage du message sous le personnage
-		this.message.setBounds(posX-10, posY+HAUTEURPERSO, LARGEURPERSO+10, HAUTEURMESSAGE);
+		this.message.setBounds(getPosX()-10, getPosY()+HAUTEURPERSO, LARGEURPERSO+10, HAUTEURMESSAGE);
 		this.message.setText(pseudo+" : "+vie);
 		// demande d'envoi à tous des modifications d'affichage
 		this.jeuServeur.envoiJeuATous();
@@ -134,21 +143,26 @@ public class Joueur extends Objet implements Global {
 	 * @param lesMurs collection de murs
 	 * @param lesJoueurs collection de joueurs
 	 */
-	public void action(Integer action, Collection<Joueur> lesJoueurs, ArrayList<Mur> lesMurs) {
+	public void action(Integer action, Collection lesJoueurs, Collection lesMurs) {
 		switch(action) {
 		case KeyEvent.VK_LEFT :
 			orientation = GAUCHE; 
-			posX = deplace(posX, action, -PAS, LARGEURARENE-LARGEURPERSO, lesJoueurs, lesMurs);
+			posX = deplace(getPosX(), action, -PAS, LARGEURARENE-LARGEURPERSO, lesJoueurs, lesMurs);
 			break;
 		case KeyEvent.VK_RIGHT :
 			orientation = DROITE; 
-			posX = deplace(posX, action, PAS, LARGEURARENE-LARGEURPERSO, lesJoueurs, lesMurs);
+			posX = deplace(getPosX(), action, PAS, LARGEURARENE-LARGEURPERSO, lesJoueurs, lesMurs);
 			break;
 		case KeyEvent.VK_UP :
-			posY = deplace(posY, action, -PAS, HAUTEURARENE-HAUTEURPERSO, lesJoueurs, lesMurs);
+			posY = deplace(getPosY(), action, -PAS, HAUTEURARENE-HAUTEURPERSO, lesJoueurs, lesMurs);
 			break;
 		case KeyEvent.VK_DOWN :
-			posY = deplace(posY, action, PAS, HAUTEURARENE-HAUTEURPERSO-HAUTEURMESSAGE, lesJoueurs, lesMurs);
+			posY = deplace(getPosY(), action, PAS, HAUTEURARENE-HAUTEURPERSO-HAUTEURMESSAGE, lesJoueurs, lesMurs);
+			break;
+		case KeyEvent.VK_SPACE :
+			if(!this.boule.getjLabel().isVisible()) {
+				this.boule.tireBoule(this, lesMurs);
+			}
 			break;
 		}
 		this.affiche(MARCHE, this.etape);
@@ -168,8 +182,8 @@ public class Joueur extends Objet implements Global {
 			int action, // gauche, droite, haut, bas
 			int lepas, // valeur du déplacement (positif ou négatif)
 			int max, // valeur à ne pas dépasser
-			Collection<Joueur> lesJoueurs, // les autres joueurs (pour éviter les collisions)
-			ArrayList<Mur> lesMurs) { // les murs (pour éviter les collisions)
+			Collection lesJoueurs, // les autres joueurs (pour éviter les collisions)
+			Collection lesMurs) { // les murs (pour éviter les collisions)
 		int ancpos = position ;
 		position += lepas ;
 		position = Math.max(position, 0) ;
@@ -180,7 +194,7 @@ public class Joueur extends Objet implements Global {
 			posY = position ;
 		}
 		// controle s'il y a collision, dans ce cas, le personnage reste sur place
-		if (toucheJoueur(lesJoueurs) || toucheMur(lesMurs)) {
+		if (toucheCollectionObjets(lesJoueurs)!=null || toucheCollectionObjets(lesMurs)!=null) {
 			position = ancpos ;
 		}
 		// passe à l'étape suivante de l'animation de la marche
@@ -189,45 +203,17 @@ public class Joueur extends Objet implements Global {
 	}
 	
 	/**
-	 * Contrôle si le joueur touche un des autres joueurs
-	 * @param lesJoueurs collection contenant tous les joueurs
-	 * @return true si le joueur touche un autre joueur
-	 */
-	private Boolean toucheJoueur(Collection<Joueur> lesJoueurs) {
-		for (Joueur unJoueur: lesJoueurs) {
-			if(!this.equals(unJoueur)) {
-				if(super.toucheObjet(unJoueur)) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * Contrôle si le joueur chevauche des murs
-	 * @param lesMurs collection contenant tous les murs
-	 * @return true si un joueur touche un mur
-	 */
-	private Boolean toucheMur(ArrayList<Mur> lesMurs) {
-		for (Mur unMur: lesMurs) {
-			if(super.toucheObjet(unMur)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	/**
 	 * Gain de points de vie après avoir touché un joueur
 	 */
 	public void gainVie() {
+		this.vie = Math.min(vie+GAIN, 10);
 	}
 	
 	/**
 	 * Perte de points de vie après avoir été touché 
 	 */
 	public void perteVie() {
+		this.vie = Math.max(vie-PERTE, 0);
 	}
 		
 	/**
@@ -235,7 +221,10 @@ public class Joueur extends Objet implements Global {
 	 * @return true si vie = 0
 	 */
 	public Boolean estMort() {
-		return null;
+		if(this.vie == 0) {
+			return true;
+		}
+		return false;
 	}
 	
 	/**

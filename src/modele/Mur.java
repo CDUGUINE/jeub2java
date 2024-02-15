@@ -23,7 +23,7 @@ public class Mur extends Objet implements Global {
 		// création du jLabel pour ce mur
 		jLabel = new JLabel();
 		// caractéristiques du mur (position, image)
-		jLabel.setBounds(posX, posY, LARGEURMUR, HAUTEURMUR);
+		jLabel.setBounds(getPosX(), getPosY(), LARGEURMUR, HAUTEURMUR);
 		URL resource = getClass().getClassLoader().getResource(MUR);
 		jLabel.setIcon(new ImageIcon(resource));
 		
