@@ -23,7 +23,6 @@ public class Boule extends Objet implements Global, Runnable {
 	 * instance de JeuServeur pour la communication
 	 */
 	private JeuServeur jeuServeur ;
-	
 	/**
 	 * joueur qui lance la boule
 	 */
@@ -44,6 +43,8 @@ public class Boule extends Objet implements Global, Runnable {
 	
 	/**
 	 * Tire d'une boule
+	 * @param lesMurs collection de murs
+	 * @param attaquant joueur qui lance la boule
 	 */
 	public void tireBoule(Joueur attaquant, Collection lesMurs) {
 		this.lesMurs = lesMurs;
@@ -63,10 +64,12 @@ public class Boule extends Objet implements Global, Runnable {
 	
 	@Override
 	public void run() {
+		// envoi du son FIGHT
+		this.jeuServeur.envoi(FIGHT);
 		// afficher l'attaquant à l'étape repos de la marche
 		this.attaquant.affiche(MARCHE, 1);
 		// rendre la boule visible
-		this.jLabel.setVisible(true);
+		super.jLabel.setVisible(true);
 		// préparer la victime (dans le cas où un joueur est touché)
 		Joueur victime = null;
 		// pas positif ou négatif (suivant l'orientation du joueur) pour faire avancer la boule
@@ -90,6 +93,8 @@ public class Boule extends Objet implements Global, Runnable {
 		} while(posX < LARGEURARENE && posX > 0 && victime == null && this.toucheCollectionObjets(lesMurs) == null);
 		// vérifier s'il y a une victime et qu'elle n'est pas déjà morte
 		if(victime != null && !victime.estMort()) {
+			// envoi du son HURT
+			this.jeuServeur.envoi(HURT);
 			victime.perteVie();
 			attaquant.gainVie();
 			// joue l'animation de la victime blessée
@@ -99,6 +104,8 @@ public class Boule extends Objet implements Global, Runnable {
 			}
 			// contrôle si la victime est morte
 			if(victime.estMort()) {
+				// envoi du son DEATH
+				this.jeuServeur.envoi(DEATH);
 				// joue l'animation de la mort
 				for(int k=1; k<3; k++) {
 					victime.affiche(MORT, k);

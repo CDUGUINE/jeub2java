@@ -40,6 +40,49 @@ public interface Global {
 	 */
 	String CHEMINSONS = "sons"+CHEMINSEPARATOR;
 	/**
+	 * Chemin du son précédent
+	 */
+	String SONPRECEDENT = CHEMINSONS+"precedent.wav";
+	/**
+	 * Chemin du son suivant
+	 */
+	String SONSUIVANT = CHEMINSONS+"suivant.wav";
+	/**
+	 * Chemin du son welcome
+	 */
+	String SONWELCOME = CHEMINSONS+"welcome.wav";	
+	/**
+	 * Chemin du son go
+	 */
+	String SONGO = CHEMINSONS+"go.wav";
+	/**
+	 * Chemin du son fight
+	 */
+	String SONFIGHT = CHEMINSONS+"fight.wav";
+	/**
+	 * Chemin du son hurt
+	 */
+	String SONHURT = CHEMINSONS+"hurt.wav";
+	/**
+	 * Chemin du son death
+	 */
+	String SONDEATH = CHEMINSONS+"death.wav";
+	/**
+	 * tableau pour les sons
+	 */
+	String[] SON = {SONFIGHT, SONHURT, SONDEATH};
+	/** numéro correspondant au son FIGHT
+	 */
+	int FIGHT = 0;
+	/**
+	 * numéro correspondant au son HURT
+	 */
+	int HURT = 1;
+	/**
+	 * numéro correspondant au son DEATH
+	 */
+	int DEATH = 2;
+	/**
 	 * Chemin de l'image de fond de la vue ChoixJoueur
 	 */
 	String FONDCHOIX = CHEMINFONDS+"fondchoix.jpg";
@@ -167,6 +210,10 @@ public interface Global {
 	 * ordre "ajout phrase" envoyé pour l'ajout d'une phrase au tchat
 	 */
 	String AJOUTPHRASE = "ajout phrase";
+	/**
+	 * ordre "joue son" envoyé pour jouer un son
+	 */
+	String JOUESON = "joue son";
 	/**
 	 * Message "ajout mur" envoyé pour la création d'un mur
 	 */

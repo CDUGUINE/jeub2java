@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 
 import controleur.Controle;
 import controleur.Global;
+import outils.son.Son;
 
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -52,7 +53,15 @@ import java.awt.Dimension;
 	private void lblPrecedent_clic() {
 		numPerso = ((numPerso + 1)%NBPERSOS)+1;
 		affichePerso();
+		precedent.play();
 	}
+	/**
+	 * sons de la fenêtre
+	 */
+	private Son welcome;
+	private Son precedent;
+	private Son suivant;
+	private Son go;
 	
 	/**
 	 * Clic sur la flèche "suivant" pour afficher le personnage suivant
@@ -60,12 +69,14 @@ import java.awt.Dimension;
 	private void lblSuivant_clic() {
 		numPerso = (numPerso%NBPERSOS)+1;
 		affichePerso();
+		suivant.play();
 	}
 	
 	/**
 	 * Clic sur GO pour envoyer les informations
 	 */
 	private void lblGo_clic() {
+		go.play();
 		if(this.txtPseudo.getText().equals("")) {
 			JOptionPane.showMessageDialog(null, "La saisie d'un pseudo est obligatoire");
 			this.txtPseudo.requestFocus();
@@ -192,8 +203,15 @@ import java.awt.Dimension;
 		this.numPerso = 1;
 		this.affichePerso();
 		
+		// récupération des sons
+		precedent = new Son(getClass().getClassLoader().getResource(SONPRECEDENT));
+		suivant = new Son(getClass().getClassLoader().getResource(SONSUIVANT));
+		go = new Son(getClass().getClassLoader().getResource(SONGO));
+		welcome = new Son(getClass().getClassLoader().getResource(SONWELCOME));
+		welcome.play();	
+		
 		// positionnement sur la zone de saisie
 		txtPseudo.requestFocus();	
-		
 	}
+	
 }
