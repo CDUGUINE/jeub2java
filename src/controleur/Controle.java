@@ -16,7 +16,7 @@ import outils.connexion.ServeurSocket;
 
 /**
  * Contrôleur et point d'entrée de l'applicaton
- * @author emds
+ * @author cdug
  *
  */
 public class Controle implements AsyncResponse, Global {
@@ -84,7 +84,7 @@ public class Controle implements AsyncResponse, Global {
 	
 	/**
 	 * Information provenant de la vue Arene
-	 * @param info information
+	 * @param info information à transférer
 	 */
 	public void evenementArene(Object info) {
 		if(info instanceof String) {
@@ -143,8 +143,8 @@ public class Controle implements AsyncResponse, Global {
 	}
 	
 	/**
-	 * Envoi d'information vers l'ordinateur distant
-	 * @param connection objet de connection pour l'envoi vers l'rdianteur distant
+	 * Envoi d'informations vers l'ordinateur distant
+	 * @param connection objet de connection pour l'envoi vers l'ordinateur distant
 	 * @param info information à envoyer
 	 */
 	public void envoi(Connection connection, Object info) {
@@ -170,6 +170,7 @@ public class Controle implements AsyncResponse, Global {
 			this.leJeu.reception(connection, info);
 			break;
 		case DECONNEXION :
+			this.leJeu.deconnexion(connection);
 			break;
 		}
 		

@@ -21,7 +21,7 @@ import java.awt.Dimension;
 
 /**
  * Frame du choix du joueur
- * @author emds
+ * @author cdug
  *
  */
  public class ChoixJoueur extends JFrame implements Global {

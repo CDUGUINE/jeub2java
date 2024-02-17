@@ -39,12 +39,25 @@ public abstract class Objet {
 	}
 	
 	/**
+	 * @param posX the posX to set
+	 */
+	public void setPosX(Integer posX) {
+		this.posX = posX;
+	}
+
+	/**
+	 * @param posY the posY to set
+	 */
+	public void setPosY(Integer posY) {
+		this.posY = posY;
+	}
+	
+	/**
 	 * @return the jLabel
 	 */
 	public JLabel getjLabel() {
 		return jLabel;
 	}	
-
 	
 	/**
 	 * contrôle si l'objet actuel touche l'objet passé en paramètre
@@ -52,25 +65,25 @@ public abstract class Objet {
 	 * @return true si les 2 objets se touchent
 	 */
 	public Boolean toucheObjet (Objet objet) {
-		if (objet.jLabel==null || objet.jLabel==null) { //objet au lieu de this dans corrigé
+		if (objet.jLabel==null || objet.jLabel==null) {
 			return false ;
 		}else{
-			return(this.getPosX()+this.jLabel.getWidth()>objet.getPosX() &&
-				this.getPosX()<objet.getPosX()+objet.jLabel.getWidth() && 
-				this.getPosY()+this.jLabel.getHeight()>objet.getPosY() &&
-				this.getPosY()<objet.getPosY()+objet.jLabel.getHeight()) ;
+			return(this.posX+this.jLabel.getWidth()>objet.posX &&
+				this.posX<objet.posX+objet.jLabel.getWidth() && 
+				this.posY+this.jLabel.getHeight()>objet.posY &&
+				this.posY<objet.posY+objet.jLabel.getHeight()) ;
 		}
 	}
 	
 	/**
-	 * Contrôle si le sujet touche un membre d'une collection
+	 * Vérifie si l'objet actuel touche un des objets de la collection
 	 * @param lesObjets collection d'objets (murs, joueurs ou boules)
-	 * @return true si le sujet touche un autre objet
+	 * @return l'objet touché ou null
 	 */
 	public Objet toucheCollectionObjets(Collection<Objet> lesObjets) {
 		for (Objet unObjet: lesObjets) {
-			if(!this.equals(unObjet)) {
-				if(this.toucheObjet(unObjet)) {
+			if(!unObjet.equals(this)) {
+				if(toucheObjet(unObjet)) {
 					return unObjet;
 				}
 			}

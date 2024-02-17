@@ -2,7 +2,7 @@ package controleur;
 
 /**
  * Global contient toutes les constantes du programme
- * @author cdugu
+ * @author cdug
  *
  */
 public interface Global {

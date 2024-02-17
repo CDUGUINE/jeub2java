@@ -1,8 +1,6 @@
 package vue;
 
 import java.awt.Dimension;
-import java.net.URL;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -11,11 +9,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import controleur.Controle;
 import controleur.Global;
 import outils.son.Son;
-import controleur.Controle;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.net.URL;
 
 /**
  * frame de l'arène du jeu
@@ -28,11 +28,11 @@ public class Arene extends JFrame implements Global {
 	 * Panel général
 	 */
 	private JPanel contentPane;
-	/** 
+	/**
 	 * Panel contenant les murs
 	 */
 	private JPanel jpnMurs;
-	/** 
+	/**
 	 * Panel contenant les joueurs et les boules
 	 */
 	private JPanel jpnJeu;
@@ -45,19 +45,17 @@ public class Arene extends JFrame implements Global {
 	 */
 	private JTextArea txtChat ;
 	/**
+	 * Instance du contrôleur pour communiquer avec lui
+	 */
+	private Controle controle;
+	/**
 	 * boolean client pour savoir s'il s'agit d'un client ou du serveur
 	 */
-	boolean client; 
-
+	private Boolean client; 
 	/**
 	 * Tableau des sons de l'arène
 	 */
 	private Son[] lesSons = new Son[SON.length];
-	
-	/**
-	 * Instance du contrôleur pour communiquer avec lui
-	 */
-	private Controle controle;
 	
 	/**
 	 * @return the jpnMurs
@@ -122,7 +120,7 @@ public class Arene extends JFrame implements Global {
 	public void ajoutTchat(String phrase) {
 		this.txtChat.setText(this.txtChat.getText()+phrase+"\r\n");
 		this.txtChat.setCaretPosition(this.txtChat.getDocument().getLength());
-}
+	}
 	
 	/**
 	 * Ajout d'un joueur, son message ou sa boule, dans le panel de jeu
@@ -156,6 +154,11 @@ public class Arene extends JFrame implements Global {
 			this.contentPane.requestFocus();
 		}
 	}
+
+	/**
+	 * Evénement touche pressée sur le panel général
+	 * @param e informations sur la touche
+	 */
 	public void contentPane_KeyPressed(KeyEvent e) {
 		int touche = -1;
 		switch(e.getKeyCode()) {
@@ -163,7 +166,7 @@ public class Arene extends JFrame implements Global {
 		case KeyEvent.VK_RIGHT :
 		case KeyEvent.VK_UP :
 		case KeyEvent.VK_DOWN :
-		case KeyEvent.VK_SPACE:
+		case KeyEvent.VK_SPACE :
 			touche = e.getKeyCode() ;
 			break;
 		}
@@ -172,7 +175,6 @@ public class Arene extends JFrame implements Global {
 			this.controle.evenementArene(touche);
 		}
 	}
-	
 		
 	/**
 	 * Create the frame.
@@ -211,7 +213,7 @@ public class Arene extends JFrame implements Global {
 		jpnMurs.setLayout(null);		
 		contentPane.add(jpnMurs);
 		
-		if(client) {
+		if(this.client) {
 			txtSaisie = new JTextField();
 			txtSaisie.addKeyListener(new KeyAdapter() {
 				@Override
@@ -235,7 +237,8 @@ public class Arene extends JFrame implements Global {
 			public void keyPressed(KeyEvent e) {
 				contentPane_KeyPressed(e);
 			}
-		});txtChat.setEditable(false);
+		});
+		txtChat.setEditable(false);
 		jspChat.setViewportView(txtChat);
 		
 		JLabel lblFond = new JLabel("");

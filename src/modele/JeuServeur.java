@@ -23,21 +23,21 @@ public class JeuServeur extends Jeu implements Global {
 	/**
 	 * Dictionnaire de joueurs indexé sur leur objet de connexion
 	 */
-	private Hashtable<Connection, Joueur> lesJoueurs = new Hashtable<Connection, Joueur>();
+	private Hashtable<Connection, Joueur> lesJoueurs = new Hashtable<Connection, Joueur>() ;
+	
+	/**
+	 * Constructeur
+	 * @param controle instance du contrôleur pour les échanges
+	 */
+	public JeuServeur(Controle controle) {
+		super.controle = controle;
+	}
 	
 	/**
 	 * @return the lesJoueurs
 	 */
 	public Collection getLesJoueurs() {
 		return lesJoueurs.values();
-	}
-	
-	/**
-	 * Constructeur
-	 * @param controle instance du controleur pour les échanges
-	 */
-	public JeuServeur(Controle controle) {
-		super.controle = controle;
 	}
 	
 	@Override
@@ -56,11 +56,11 @@ public class JeuServeur extends Jeu implements Global {
 			String pseudo = infos[1];
 			int numPerso = Integer.parseInt(infos[2]);
 			this.lesJoueurs.get(connection).initPerso(pseudo, numPerso, this.lesJoueurs.values(), this.lesMurs);
-			String phrase = "*** "+this.lesJoueurs.get(connection).getPseudo()+" vient de se connecter ***";
-			this.controle.evenementJeuServeur(AJOUTPHRASE, phrase);
+			String premierMessage = "*** "+pseudo+" vient de se connecter ***";
+			this.controle.evenementJeuServeur(AJOUTPHRASE, premierMessage);
 			break;
 		case TCHAT :
-			phrase = infos[1];
+			String phrase = infos[1];
 			phrase = this.lesJoueurs.get(connection).getPseudo()+" > "+phrase;
 			this.controle.evenementJeuServeur(AJOUTPHRASE, phrase);
 			break;
@@ -72,7 +72,9 @@ public class JeuServeur extends Jeu implements Global {
 	}
 	
 	@Override
-	public void deconnexion() {
+	public void deconnexion(Connection connection) {
+		this.lesJoueurs.get(connection).departJoueur();
+		this.lesJoueurs.remove(connection);
 	}
 
 	public void ajoutJLabelJeuArene(JLabel jLabel) {

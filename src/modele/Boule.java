@@ -1,12 +1,8 @@
 package modele;
-import java.awt.Color;
-import java.awt.Font;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collection;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import controleur.Global;
 /**
  * Gestion de la boule
@@ -56,8 +52,6 @@ public class Boule extends Objet implements Global, Runnable {
 			posX = attaquant.getPosX() + LARGEURPERSO + 1 ;
 		}
 		posY = attaquant.getPosY()+HAUTEURPERSO/2;
-		//super.jLabel.setBounds(this.getPosX(), this.getPosY(), LARGEURBOULE, HAUTEURBOULE); test intermédiaire, ne fonctionne pas
-		//super.jLabel.setVisible(true);
 		// démarrer le thread pour gérer le tir de la boule
 		new Thread(this).start();
 	}
